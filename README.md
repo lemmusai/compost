@@ -1,5 +1,5 @@
-# Sklearn-Wrappers
+# Compost
 
-This module intent to accelerate the development of machine learning projects. We built wrappers around the popular sklearn module in order to automate some pipeline and facilitate replication during inference.
+Stop using garbage in your machine learning models. Start composting !
 
-# 
+#
