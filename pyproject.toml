@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "sklearn-wrappers"
+version = "0.1.0"
+description = ""
+authors = ["Nico Coallier <nicolas.coallier@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.6"
+
+[tool.poetry.dev-dependencies]
+jupyter = "^1.0"
+notebook = "^6.0"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"

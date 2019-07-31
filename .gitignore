@@ -1,0 +1,11 @@
+venv/
+env/
+VENV/
+ENV/
+.idea/
+
+*pyc
+.ipynb_checkpoints/
+__pycache__/
+*pkl
+.pytest_cache/

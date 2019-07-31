@@ -1,0 +1,71 @@
+version: 2.1
+
+region_names: &region_names
+- 'us-east-1'
+
+workflows:
+  ci:
+   jobs:
+      - pylama:
+          context: org-global
+      - black:
+          context: org-global
+      - isort:
+          context: org-global
+      - pytest:
+          context: org-global
+jobs:
+  pylama:
+    executor: python
+    steps:
+      - setup-project
+      - run: poetry run pylama
+
+  black:
+    executor: python
+    steps:
+      - setup-project
+      - run: poetry run black --check .
+
+  isort:
+    executor: python
+    steps:
+      - setup-project
+      - run: poetry run isort --check-only --recursive .
+
+  pytest:
+    executor: python
+    steps:
+      - setup-project
+      - run: poetry run pytest
+
+commands:
+  setup-project:
+    steps:
+      - checkout
+      - install-deps
+
+  install-deps:
+    steps:
+      - restore_cache:
+          keys:
+            - v1-poetry-cache-{{ checksum "pyproject.toml" }}-{{ checksum "poetry.lock" }}
+            - v1-poetry-cache-{{ checksum "pyproject.toml" }}-
+            - v1-poetry-cache-
+      - run:
+          name: Install dependencies
+          command: |
+            pip install -U pip
+            pip install poetry
+            poetry install
+      - save_cache:
+          key: v1-poetry-cache-{{ checksum "pyproject.toml" }}-{{ checksum "poetry.lock" }}
+          paths:
+            - ~/.local
+            - ~/.cache
+
+executors:
+  python:
+    docker:
+      - image: circleci/python:3.6
+        user: root
